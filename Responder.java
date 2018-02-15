@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.HashMap;
 /**
  * The responder class represents a response generator object.
  * It is used to generate an automatic response to an input string.
@@ -11,6 +12,7 @@ public class Responder
 {
     private ArrayList<String> frasesRespuesta;
     private Random numeroAleatorio;
+    private HashMap<String, String> mapRespuestas;
     /**
      * Construct a Responder
      * Crea un objeto de la clase Random y lo guarad en numeroAleatorio,
@@ -21,6 +23,7 @@ public class Responder
     {
         numeroAleatorio = new Random();
         frasesRespuesta = new ArrayList<>();
+        mapRespuestas = new HashMap<>();
         frasesRespuesta.add("Eso suena interesante, cuentame mas...");
         frasesRespuesta.add("No creo que eso sea cierto");
         frasesRespuesta.add("Por favor, no escriba un comentario negativo sobre nosotros");
@@ -28,20 +31,31 @@ public class Responder
         frasesRespuesta.add("Si me permite hablar…");
         frasesRespuesta.add("¿Ha leído el manual?");
         frasesRespuesta.add("Has cometido un error.");
+        mapRespuestas.put("despacio", "Eso es problema de tu hardware, con un mejor procesador arreglarias tu problema");
+        mapRespuestas.put("bug", "Nuestro programa tiene bugs que estamos intentando solucionar");
+        mapRespuestas.put("error", "Describa su error mas detalladamente");
+        mapRespuestas.put("caro", "Nuestro programa tiene un precio acorde a los servicios que presta el mismo");
     }
 
     /**
      * Generate a response.
      * @return   A string that should be displayed as the response
      */
-    public String generateResponse()
+    public String generateResponse(String word)
     {
-        int limiteNums = 8;
-        //En este caso es 8 debido a que cogeria un numero aleatorio entre 0 y 8 excluyendo este ultimo, como queremos coger un elemento del array y solo hay 7 nos 
-        //valdria para este caso, pero se puede modificar a tu gusto.
-        String respuesta = frasesRespuesta.get(numeroAleatorio.nextInt(limiteNums));
-        //le decimos que nos coja el string de la coleccion que ocupa el lugar dado por un numero aleatorio entre 0 y el numero que haya en limiteNums-1
+        String respuesta = null;
+        respuesta = mapRespuestas.get(word);
+        if(respuesta == null)
+        {
+            respuesta = pickDefaultResponse();
+        }
         return respuesta;
     }
-  
+
+    public String pickDefaultResponse()
+    {
+        int limiteNums = 8;
+        String respuesta = frasesRespuesta.get(numeroAleatorio.nextInt(limiteNums));
+        return respuesta;
+    }
 }

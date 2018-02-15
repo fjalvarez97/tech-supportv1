@@ -28,9 +28,11 @@ public class InputReader
      */
     public String getInput()
     {
-        System.out.print("> ");         // print prompt
+        System.out.print("> "); // print prompt
         String inputLine = reader.nextLine();
-
+        //String[] wordArray = inputLine.split(" ");
+        //HashSet<String> words = new HashSet<>();
+        //words.add(wordArray.get(0));
         return inputLine;
     }
 }
