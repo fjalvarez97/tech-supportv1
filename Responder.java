@@ -14,7 +14,7 @@ public class Responder
 {
     private ArrayList<String> frasesRespuesta;
     private Random numeroAleatorio;
-    private HashMap<String, String> mapRespuestas;
+    private HashMap<HashSet<String>, String> mapRespuestas;
     /**
      * Construct a Responder
      * Crea un objeto de la clase Random y lo guarad en numeroAleatorio,
@@ -33,10 +33,27 @@ public class Responder
         frasesRespuesta.add("Si me permite hablar…");
         frasesRespuesta.add("¿Ha leído el manual?");
         frasesRespuesta.add("Has cometido un error.");
-        mapRespuestas.put("despacio", "Eso es problema de tu hardware, con un mejor procesador arreglarias tu problema");
-        mapRespuestas.put("bug", "Nuestro programa tiene bugs que estamos intentando solucionar");
-        mapRespuestas.put("error", "Describa su error mas detalladamente");
-        mapRespuestas.put("caro", "Nuestro programa tiene un precio acorde a los servicios que presta el mismo");
+        
+        HashSet<String> grupo1 = new HashSet<>();
+        grupo1.add("procesador");
+        grupo1.add("lento");
+        
+        HashSet<String> grupo2 = new HashSet<>();
+        grupo2.add("bug");
+        grupo2.add("fallo");
+        
+        HashSet<String> grupo3 = new HashSet<>();
+        grupo3.add("error");
+        grupo3.add("problema");
+        
+        HashSet<String> grupo4 = new HashSet<>();
+        grupo4.add("caro");
+        grupo4.add("barato");
+        
+        mapRespuestas.put(grupo1, "Eso es problema de tu hardware, con un mejor procesador arreglarias tu problema");
+        mapRespuestas.put(grupo2, "Nuestro programa tiene bugs que estamos intentando solucionar");
+        mapRespuestas.put(grupo3, "Describa su error mas detalladamente");
+        mapRespuestas.put(grupo4, "Nuestro programa tiene un precio acorde a los servicios que presta el mismo");
     }
 
     /**
@@ -46,17 +63,7 @@ public class Responder
     public String generateResponse(HashSet<String> word)
     {
         String respuesta = null;
-        Iterator<String> iterador = word.iterator();
-        boolean buscandoPalabra = true;
-        while (iterador.hasNext() && buscandoPalabra)
-        {
-            respuesta = mapRespuestas.get(iterador.next());
-            if (respuesta != null)
-            {
-                buscandoPalabra = false;;
-            }
-        }
-        
+        respuesta = mapRespuestas.get(word);
         if (respuesta == null)
         {
             respuesta = pickDefaultResponse();
