@@ -26,14 +26,8 @@ public class Responder
         numeroAleatorio = new Random();
         frasesRespuesta = new ArrayList<>();
         mapRespuestas = new HashMap<>();
-        frasesRespuesta.add("Eso suena interesante, cuentame mas...");
-        frasesRespuesta.add("No creo que eso sea cierto");
-        frasesRespuesta.add("Por favor, no escriba un comentario negativo sobre nosotros");
-        frasesRespuesta.add("Un momento, tengo que atender una llamada");
-        frasesRespuesta.add("Si me permite hablar…");
-        frasesRespuesta.add("¿Ha leído el manual?");
-        frasesRespuesta.add("Has cometido un error.");
-        
+        createDefaultResponse();
+
         HashSet<String> grupo1 = new HashSet<>();
         grupo1.add("procesador");
         grupo1.add("lento");
@@ -66,15 +60,28 @@ public class Responder
         respuesta = mapRespuestas.get(word);
         if (respuesta == null)
         {
-            respuesta = pickDefaultResponse();
+            if(frasesRespuesta.size() > 0)
+            {
+                respuesta = frasesRespuesta.get(0);
+                frasesRespuesta.remove(0);
+            }
+            else 
+            {
+                respuesta = "No he comprendido su frase.";
+            }
         }
         return respuesta;
     }
 
-    public String pickDefaultResponse()
+    public void createDefaultResponse()
     {
-        int limiteNums = 8;
-        String respuesta = frasesRespuesta.get(numeroAleatorio.nextInt(limiteNums));
-        return respuesta;
+        frasesRespuesta = new ArrayList<>();  
+        frasesRespuesta.add("Eso suena interesante, cuentame mas...");
+        frasesRespuesta.add("No creo que eso sea cierto");
+        frasesRespuesta.add("Por favor, no escriba un comentario negativo sobre nosotros");
+        frasesRespuesta.add("Un momento, tengo que atender una llamada");
+        frasesRespuesta.add("Si me permite hablar…");
+        frasesRespuesta.add("¿Ha leído el manual?");
+        frasesRespuesta.add("Has cometido un error."); 
     }
 }
