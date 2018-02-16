@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class InputReader
 {
     private Scanner reader;
-
     /**
      * Create a new InputReader that reads text from the text terminal.
      */
@@ -26,12 +25,16 @@ public class InputReader
      *
      * @return  A String typed by the user.
      */
-    public String getInput()
+    public HashSet<String> getInput()
     {
         System.out.print("> "); // print prompt
         String inputLine = reader.nextLine();
         String[] wordArray = inputLine.split(" ");
-        String primeraPalabra = wordArray[0]; 
-        return primeraPalabra;
+        HashSet<String> conjuntoPalabras = new HashSet<>();
+        for (String palabra : wordArray)
+        {
+            conjuntoPalabras.add(palabra);
+        }
+        return conjuntoPalabras;
     }
 }
